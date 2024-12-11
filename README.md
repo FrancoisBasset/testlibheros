@@ -1,2 +1,2 @@
 # testlibheros
-Technical test for libheros company
+Technical test for Libheros company
