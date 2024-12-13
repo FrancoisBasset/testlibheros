@@ -12,8 +12,8 @@ import {
 import TasklistService from './tasklist.service';
 import CreateTasklistDto from './dto/create-tasklist.dto';
 import UpdateTasklistDto from './dto/update-tasklist.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { TasklistGuard } from './tasklist.guard';
+import AuthGuard from 'src/auth/auth.guard';
+import TasklistGuard from './tasklist.guard';
 
 @Controller('tasklists')
 export default class TasklistController {
@@ -52,7 +52,7 @@ export default class TasklistController {
 	) {
 		this.tasklistService.update(request['userId'], +id, updateTasklistDto);
 	}
-	
+
 	@UseGuards(AuthGuard, TasklistGuard)
 	@Delete(':id')
 	async remove(@Req() request: Request, @Param('id') id: string) {

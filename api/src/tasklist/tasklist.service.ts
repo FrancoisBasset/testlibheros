@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import TaskList from './entities/tasklist.entity';
 import CreateTasklistDto from './dto/create-tasklist.dto';
 import UpdateTasklistDto from './dto/update-tasklist.dto';
+import Task from 'src/task/entities/task.entity';
 
 @Injectable()
 export default class TasklistService {
@@ -22,7 +23,8 @@ export default class TasklistService {
 		return this.tasklistModel.findAll({
 			where: {
 				userId: userId
-			}
+			},
+			include: [Task]
 		});
 	}
 
@@ -31,7 +33,8 @@ export default class TasklistService {
 			where: {
 				id: id,
 				userId: userId
-			}
+			},
+			include: [Task]
 		});
 	}
 

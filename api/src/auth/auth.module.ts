@@ -3,12 +3,14 @@ import AuthController from './auth.controller';
 import AuthService from './auth.service';
 import UserModule from '../user/user.module';
 import TaskListModule from '../tasklist/tasklist.module';
+import TaskModule from '../task/task.module';
 import { JwtService, JwtModule } from '@nestjs/jwt';
 
 @Module({
 	imports: [
 		UserModule,
 		TaskListModule,
+		TaskModule,
 		JwtModule.register({
 			global: true,
 			secret: 'secret',
