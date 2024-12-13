@@ -1,4 +1,6 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { NonAttribute } from 'sequelize';
+import { Column, HasMany, Model, Table } from 'sequelize-typescript';
+import TaskList from 'src/tasklist/entities/tasklist.entity';
 
 @Table
 export default class User extends Model<User> {
@@ -16,4 +18,7 @@ export default class User extends Model<User> {
 
 	@Column
 	mailaddress: string;
+
+	@HasMany(() => TaskList)
+	tasklists: TaskList[];
 }
