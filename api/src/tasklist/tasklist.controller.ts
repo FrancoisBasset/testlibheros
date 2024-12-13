@@ -7,13 +7,13 @@ import {
 	Delete,
 	UseGuards,
 	Req,
-	Put,
-	NotFoundException
+	Put
 } from '@nestjs/common';
 import TasklistService from './tasklist.service';
 import CreateTasklistDto from './dto/create-tasklist.dto';
 import UpdateTasklistDto from './dto/update-tasklist.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { TasklistGuard } from './tasklist.guard';
 
 @Controller('tasklists')
 export default class TasklistController {
@@ -37,40 +37,25 @@ export default class TasklistController {
 		return this.tasklistService.findAll(request['userId']);
 	}
 
-	@UseGuards(AuthGuard)
+	@UseGuards(AuthGuard, TasklistGuard)
 	@Get(':id')
 	async findOne(@Req() request: Request, @Param('id') id: string) {
-		const tasklist = await this.tasklistService.findOne(request['userId'], +id);
-		if (!tasklist) {
-			throw new NotFoundException();
-		}
-
-		return tasklist;
+		return request['tasklist'];
 	}
 
-	@UseGuards(AuthGuard)
+	@UseGuards(AuthGuard, TasklistGuard)
 	@Put(':id')
 	async update(
 		@Req() request: Request,
 		@Param('id') id: string,
 		@Body() updateTasklistDto: UpdateTasklistDto
 	) {
-		const tasklist = await this.tasklistService.findOne(request['userId'], +id);
-		if (tasklist === null) {
-			throw new NotFoundException();
-		}
-
 		this.tasklistService.update(request['userId'], +id, updateTasklistDto);
 	}
 	
-	@UseGuards(AuthGuard)
+	@UseGuards(AuthGuard, TasklistGuard)
 	@Delete(':id')
 	async remove(@Req() request: Request, @Param('id') id: string) {
-		const tasklist = await this.tasklistService.findOne(request['userId'], +id);
-		if (tasklist === null) {
-			throw new NotFoundException();
-		}
-
 		return this.tasklistService.remove(+id);
 	}
 }
