@@ -3,18 +3,19 @@ import {
 	Get,
 	Post,
 	Body,
-	Patch,
 	Param,
 	Delete,
 	UseGuards,
-	Req
+	Req,
+	Put,
+	NotFoundException
 } from '@nestjs/common';
 import TasklistService from './tasklist.service';
 import CreateTasklistDto from './dto/create-tasklist.dto';
 import UpdateTasklistDto from './dto/update-tasklist.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 
-@Controller('tasklist')
+@Controller('tasklists')
 export default class TasklistController {
 	constructor(private readonly tasklistService: TasklistService) {}
 
@@ -26,30 +27,50 @@ export default class TasklistController {
 	) {
 		return this.tasklistService.create(
 			createTasklistDto,
-			request['user'].sub
+			request['userId']
 		);
 	}
 
+	@UseGuards(AuthGuard)
 	@Get()
-	findAll() {
-		return this.tasklistService.findAll();
+	findAll(@Req() request: Request) {
+		return this.tasklistService.findAll(request['userId']);
 	}
 
+	@UseGuards(AuthGuard)
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.tasklistService.findOne(+id);
+	async findOne(@Req() request: Request, @Param('id') id: string) {
+		const tasklist = await this.tasklistService.findOne(request['userId'], +id);
+		if (!tasklist) {
+			throw new NotFoundException();
+		}
+
+		return tasklist;
 	}
 
-	@Patch(':id')
-	update(
+	@UseGuards(AuthGuard)
+	@Put(':id')
+	async update(
+		@Req() request: Request,
 		@Param('id') id: string,
 		@Body() updateTasklistDto: UpdateTasklistDto
 	) {
-		return this.tasklistService.update(+id, updateTasklistDto);
-	}
+		const tasklist = await this.tasklistService.findOne(request['userId'], +id);
+		if (tasklist === null) {
+			throw new NotFoundException();
+		}
 
+		this.tasklistService.update(request['userId'], +id, updateTasklistDto);
+	}
+	
+	@UseGuards(AuthGuard)
 	@Delete(':id')
-	remove(@Param('id') id: string) {
+	async remove(@Req() request: Request, @Param('id') id: string) {
+		const tasklist = await this.tasklistService.findOne(request['userId'], +id);
+		if (tasklist === null) {
+			throw new NotFoundException();
+		}
+
 		return this.tasklistService.remove(+id);
 	}
 }

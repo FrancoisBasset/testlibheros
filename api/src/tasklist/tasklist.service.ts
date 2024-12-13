@@ -18,19 +18,37 @@ export default class TasklistService {
 		});
 	}
 
-	findAll() {
-		return `This action returns all tasklist`;
+	findAll(userId: number) {
+		return this.tasklistModel.findAll({
+			where: {
+				userId: userId
+			}
+		});
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} tasklist`;
+	findOne(userId: number, id: number) {
+		return this.tasklistModel.findOne({
+			where: {
+				id: id,
+				userId: userId
+			}
+		});
 	}
 
-	update(id: number, updateTasklistDto: UpdateTasklistDto) {
-		return `This action updates a #${id} tasklist`;
+	update(userId: number, id: number, updateTasklistDto: UpdateTasklistDto) {
+		return this.tasklistModel.update(updateTasklistDto, {
+			where: {
+				id: id,
+				userId: userId
+			}
+		});
 	}
 
 	remove(id: number) {
-		return `This action removes a #${id} tasklist`;
+		return this.tasklistModel.destroy({
+			where: {
+				id: id
+			}
+		});
 	}
 }
