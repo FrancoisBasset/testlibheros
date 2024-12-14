@@ -13,7 +13,9 @@
 		</div>
 
 		<text>Liste des tableaux :</text>
-		<BoardButton v-for="board of app.boards" :key="board" :board="board" @boardDeleted="app.reloadBoards" />
+		<div class="flex flex-col m-2">
+			<BoardButton v-for="board of app.boards" :key="board" :board="board" @boardDeleted="app.reloadBoards" />
+		</div>
 	</div>
 </template>
 

@@ -1,5 +1,7 @@
 <template>
 	<Dialog @close="$emit('close')">
+		<b>Créer un compte</b>
+
 		<div class="flex flex-col">
 			<text>Nom d'utilisateur *</text>
 			<input type="text" v-model="username" :class="{ 'border-red-500': missing && username === '' }" />

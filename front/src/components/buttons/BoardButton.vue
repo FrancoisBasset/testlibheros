@@ -1,13 +1,13 @@
 <template>
-	<div class="flex flex-row">
+	<div class="flex flex-row justify-between">
 		<div v-if="!editMode">
 			<button class="mx-1" @click="() => {
 				this.app.currentBoard = board;
 				this.app.reloadTasks();
 			}">{{ board.name }}</button>
 		</div>
-		<div v-else class="flex flex-row">
-			<input type="text" v-model="newName" />
+		<div v-else class="flex flex-row w-full">
+			<input type="text" v-model="newName" class="!w-full" />
 			<button @click="renameBoard">OK</button>
 		</div>
 
