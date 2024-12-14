@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	background-color: rgb(220, 255, 255);
+}
+
+button {
+	@apply bg-blue-500 h-8 text-white rounded p-1;
+}
+
+button:disabled {
+	@apply bg-blue-200;
+}
+
+input[type="text"] {
+	@apply border-[1px] rounded p-1 h-8;
+}
