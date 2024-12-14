@@ -8,7 +8,7 @@
 		</text>
 
 		<div class="flex flex-row gap-1">
-			<text class="text-xs bg-blue-500 text-white rounded p-1">{{ task.duedate }}</text>
+			<text class="text-xs bg-blue-500 text-white rounded p-1">{{ task.dueDate }}</text>
 
 			<text class="text-xs bg-blue-500 text-white rounded p-1">
 				{{ task.state === 'current' ? 'en cours' : 'terminée' }}

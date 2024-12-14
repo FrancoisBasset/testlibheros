@@ -69,7 +69,7 @@ export default defineStore('app', {
 				}
 			});
 		},
-		addTask(title, description, duedate) {
+		addTask(title, description, dueDate) {
 			return fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks', {
 				method: 'POST',
 				headers: {
@@ -80,11 +80,11 @@ export default defineStore('app', {
 					title: title,
 					description: description,
 					creationDate: new Date(),
-					duedate: duedate
+					dueDate: dueDate
 				})
 			})
 		},
-		updateTask(title, description, duedate, state) {
+		updateTask(title, description, dueDate, state) {
 			return fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks/' + this.currentTask.id, {
 				method: 'PUT',
 				headers: {
@@ -94,7 +94,7 @@ export default defineStore('app', {
 				body: JSON.stringify({
 					title: title,
 					description: description,
-					duedate: duedate,
+					dueDate: dueDate,
 					state: state
 				})
 			}).then(() => {

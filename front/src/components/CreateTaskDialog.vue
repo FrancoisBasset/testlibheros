@@ -14,8 +14,8 @@
 
 		<div class="flex flex-col">
 			<text>Date d'échéance</text>
-			<input type="date" v-model="duedate" :class="{ 'border-red-500': missing && duedate === '' }" />
-			<text class="text-sm text-red-500" v-if="missing && duedate === ''">Date d'échéance manquante</text>
+			<input type="date" v-model="dueDate" :class="{ 'border-red-500': missing && dueDate === '' }" />
+			<text class="text-sm text-red-500" v-if="missing && dueDate === ''">Date d'échéance manquante</text>
 		</div>
 
 		<div v-if="success" class="text-green-500">La tâche a bien été créée !</div>
@@ -38,7 +38,7 @@ function initialData() {
 		app: useApp(),
 		title: '',
 		description: '',
-		duedate: '',
+		dueDate: '',
 		missing: false,
 		success: null
 	}
@@ -49,14 +49,14 @@ export default {
 	methods: {
 		async addTask() {
 			if (this.title.trim() === '' || this.description.trim() === '' ||
-				this.duedate.trim() === '') {
+				this.dueDate.trim() === '') {
 					this.missing = true;
 					return;
 				}
 
 			this.missing = false;
 
-			this.app.addTask(this.title, this.description, this.duedate).then(res => {
+			this.app.addTask(this.title, this.description, this.dueDate).then(res => {
 				if (res.status === 201) {
 					this.success = true;
 					this.$emit('taskCreated');

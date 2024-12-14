@@ -20,7 +20,7 @@ export default class Task extends Model<Task> {
 	creationDate: string;
 
 	@Column
-	duedate: string;
+	dueDate: string;
 
 	@Column
 	state: string;

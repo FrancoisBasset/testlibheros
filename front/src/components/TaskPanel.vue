@@ -16,8 +16,8 @@
 
 			<div class="flex flex-col">
 				<text>Date d'échéance</text>
-				<input type="date" v-model="duedate" :class="{ 'border-red-500': duedate === '' }" />
-				<text class="text-sm text-red-500" v-if="duedate === ''">Date d'échéance manquante</text>
+				<input type="date" v-model="dueDate" :class="{ 'border-red-500': dueDate === '' }" />
+				<text class="text-sm text-red-500" v-if="dueDate === ''">Date d'échéance manquante</text>
 			</div>
 
 			<div class="flex flex-col">
@@ -43,7 +43,7 @@ export default {
 	data: () => ({
 		title: '',
 		description: '',
-		duedate: '',
+		dueDate: '',
 		state: null,
 		session: useSession(),
 		app: useApp()
@@ -51,12 +51,12 @@ export default {
 	created() {
 		this.title = this.app.currentTask.title;
 		this.description = this.app.currentTask.description;
-		this.duedate = this.app.currentTask.duedate;
+		this.dueDate = this.app.currentTask.dueDate;
 		this.state = this.app.currentTask.state;
 	},
 	methods: {
 		updateTask() {
-			this.app.updateTask(this.title, this.description, this.duedate, this.state);
+			this.app.updateTask(this.title, this.description, this.dueDate, this.state);
 		},
 		deleteTask() {
 			this.app.deleteTask();
