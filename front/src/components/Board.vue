@@ -15,7 +15,7 @@
 			<span v-else>Tâches terminées</span>
 		</div>
 		
-		<Task v-for="task of tasksToShow" :key="task" :task="task" @click="_board.currentTask = task" />
+		<Task v-for="task of tasksToShow" :key="task" :task="task" @click="app.currentTask = task" />
 	</div>
 </template>
 
@@ -26,12 +26,12 @@ import Task from './Task.vue';
 
 <script>
 import useSession from '@/stores/session';
-import useBoard from '@/stores/board';
+import useApp from '@/stores/app';
 
 export default {
 	data: () => ({
 		session: useSession(),
-		_board: useBoard(),
+		app: useApp(),
 		mode: 'current',
 		tasks: [],
 		showCreateTaskDialog: false
@@ -46,7 +46,7 @@ export default {
 	},
 	methods: {
 		reloadTasks() {
-			fetch('http://localhost:3000/tasklists/' + this._board.currentBoard.id + '/tasks', {
+			fetch('http://localhost:3000/tasklists/' + this.app.currentBoard.id + '/tasks', {
 				headers: {
 					'Authorization': 'Bearer ' + this.session.user.access_token
 				}

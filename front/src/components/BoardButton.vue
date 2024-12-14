@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-row">
 		<div v-if="!editMode">
-			<button class="mx-1" @click="_board.currentBoard = board">{{ board.name }}</button>
+			<button class="mx-1" @click="app.currentBoard = board">{{ board.name }}</button>
 		</div>
 		<div v-else class="flex flex-row">
 			<input type="text" v-model="newName" />
@@ -22,13 +22,13 @@ import DeleteButton from './DeleteButton.vue';
 
 <script>
 import useSession from '@/stores/session';
-import useBoard from '@/stores/board';
+import useApp from '@/stores/app';
 
 export default {
 	props: ['board'],
 	data: () => ({
 		session: useSession(),
-		_board: useBoard(),
+		app: useApp(),
 		editMode: false,
 		newName: ''
 	}),
@@ -60,8 +60,8 @@ export default {
 				}
 			}).then(() => {
 				this.$emit('boardDeleted');
-				if (this.board.id === this._board.currentBoard.id) {
-					this._board.currentBoard = null;
+				if (this.board.id === this.app.currentBoard.id) {
+					this.app.currentBoard = null;
 				}
 			});
 		}

@@ -30,12 +30,12 @@ import Dialog from './Dialog.vue';
 
 <script>
 import useSession from '@/stores/session';
-import useBoard from '@/stores/board';
+import useApp from '@/stores/app';
 
 function initialData() {
 	return {
 		session: useSession(),
-		_board: useBoard(),
+		app: useApp(),
 		title: '',
 		description: '',
 		duedate: '',
@@ -56,7 +56,7 @@ export default {
 
 			this.missing = false;
 
-			fetch('http://localhost:3000/tasklists/' + this._board.currentBoard.id + '/tasks', {
+			fetch('http://localhost:3000/tasklists/' + this.app.currentBoard.id + '/tasks', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
