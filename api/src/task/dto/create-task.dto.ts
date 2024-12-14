@@ -3,5 +3,4 @@ export default class CreateTaskDto {
 	description: string;
 	creationdate: string;
 	duedate: string;
-	state: string;
 }

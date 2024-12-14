@@ -21,14 +21,14 @@ import DeleteButton from './DeleteButton.vue';
 </script>
 
 <script>
-import useBoard from '@/stores/board';
 import useSession from '@/stores/session';
+import useBoard from '@/stores/board';
 
 export default {
 	props: ['board'],
 	data: () => ({
-		_board: useBoard(),
 		session: useSession(),
+		_board: useBoard(),
 		editMode: false,
 		newName: ''
 	}),
@@ -60,6 +60,9 @@ export default {
 				}
 			}).then(() => {
 				this.$emit('boardDeleted');
+				if (this.board.id === this._board.currentBoard.id) {
+					this._board.currentBoard = null;
+				}
 			});
 		}
 	}

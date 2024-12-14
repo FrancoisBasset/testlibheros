@@ -14,6 +14,7 @@ export default class TaskService {
 	create(createTaskDto: CreateTaskDto, id) {
 		return this.taskModel.create({
 			...createTaskDto,
+			state: 'current',
 			tasklistId: id
 		});
 	}

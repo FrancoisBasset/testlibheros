@@ -11,23 +11,33 @@
 				</button>
 			</div>
 			<div class="w-10/12">
-				
+				<Board v-if="_board.currentBoard" />
+				<div v-else class="border-red-500 border-[2px] w-fit p-10 mx-auto">
+					Aucune liste de tâches n'est sélectionné
+				</div>
+			</div>
+			<div v-if="_board.currentTask" class="w-3/12 h-screen bg-gray-100 rounded-lg">
+				<TaskPanel />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
+import Board from '@/components/Board.vue';
 import HomeMenu from '@/components/HomeMenu.vue';
 import Panel from '@/components/Panel.vue';
+import TaskPanel from '@/components/TaskPanel.vue';
 </script>
 
 <script>
 import useSession from '@/stores/session';
+import useBoard from '@/stores/board';
 
 export default {
 	data: () => ({
 		session: useSession(),
+		_board: useBoard(),
 		openPanel: true
 	})
 }
