@@ -8,7 +8,7 @@
 			</button>
 		</div>
 
-		<CreateTaskDialog v-if="showCreateTaskDialog" @close="showCreateTaskDialog = false" @taskCreated="reloadTasks" />
+		<CreateTaskDialog v-if="showCreateTaskDialog" @close="showCreateTaskDialog = false" @taskCreated="app.reloadTasks" />
 
 		<div class="text-4xl">
 			<span v-if="mode === 'current'">Tâches en cours</span>
@@ -33,26 +33,14 @@ export default {
 		session: useSession(),
 		app: useApp(),
 		mode: 'current',
-		tasks: [],
 		showCreateTaskDialog: false
 	}),
 	created() {
-		this.reloadTasks();
+		this.app.reloadTasks();
 	},
 	computed: {
 		tasksToShow() {
-			return this.tasks.filter(t => t.state === this.mode);
-		}
-	},
-	methods: {
-		reloadTasks() {
-			fetch('http://localhost:3000/tasklists/' + this.app.currentBoard.id + '/tasks', {
-				headers: {
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				}
-			})
-				.then(res => res.json())
-				.then(json => this.tasks = json);
+			return this.app.tasks.filter(t => t.state === this.mode);
 		}
 	}
 };

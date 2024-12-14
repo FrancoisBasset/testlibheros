@@ -13,7 +13,7 @@
 		</div>
 
 		<text>Liste des tableaux :</text>
-		<BoardButton v-for="board of boards" :key="board" :board="board" @boardDeleted="reloadBoards" />
+		<BoardButton v-for="board of app.boards" :key="board" :board="board" @boardDeleted="app.reloadBoards" />
 	</div>
 </template>
 
@@ -23,53 +23,32 @@ import BoardButton from './BoardButton.vue';
 
 <script>
 import useSession from '@/stores/session';
+import useApp from '@/stores/app';
 
 export default {
 	data: () => ({
 		session: useSession(),
+		app: useApp(),
 		openNewBoard: false,
-		boards: [],
 		newBoardName: '',
 		alreadyExists: false
 	}),
 	created() {
-		this.reloadBoards();
+		this.app.reloadBoards();
 	},
 	methods: {
-		reloadBoards() {
-			fetch('http://localhost:3000/tasklists', {
-				headers: {
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				}
-			})
-				.then(res => res.json())
-				.then(json => {
-					this.boards = json;
-				});
-		},
 		addBoard() {
-			this.alreadyExists = this.boards.find(b => b.name === this.newBoardName) !== undefined;
+			this.alreadyExists = this.app.boards.find(b => b.name === this.newBoardName) !== undefined;
 			if (this.alreadyExists) {
 				return;
 			}
 
 			this.alreadyExists = false;
 
-			fetch('http://localhost:3000/tasklists', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				},
-				body: JSON.stringify({
-					name: this.newBoardName
-				})
-			})
-				.then(() => {
-					this.reloadBoards();
-					this.newBoardName = '';
-					this.openNewBoard = false;
-				});
+			this.app.addBoard(this.newBoardName).then(() => {
+				this.newBoardName = '';
+				this.openNewBoard = false;
+			});
 		}
 	}
 }

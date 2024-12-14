@@ -1,7 +1,10 @@
 <template>
 	<div class="flex flex-row">
 		<div v-if="!editMode">
-			<button class="mx-1" @click="app.currentBoard = board">{{ board.name }}</button>
+			<button class="mx-1" @click="() => {
+				this.app.currentBoard = board;
+				this.app.reloadTasks();
+			}">{{ board.name }}</button>
 		</div>
 		<div v-else class="flex flex-row">
 			<input type="text" v-model="newName" />
@@ -37,32 +40,14 @@ export default {
 	},
 	methods: {
 		renameBoard() {
-			fetch('http://localhost:3000/tasklists/' + this.board.id, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				},
-				body: JSON.stringify({
-					name: this.newName
-				})
-			}).then(() => {
+			this.app.renameBoard(this.board.id, this.newName).then(() => {
 				this.editMode = false;
 				this.board.name = this.newName;
 			});
 		},
 		deleteBoard() {
-			fetch('http://localhost:3000/tasklists/' + this.board.id, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				}
-			}).then(() => {
+			this.app.deleteBoard(this.board.id).then(() => {
 				this.$emit('boardDeleted');
-				if (this.board.id === this.app.currentBoard.id) {
-					this.app.currentBoard = null;
-				}
 			});
 		}
 	}

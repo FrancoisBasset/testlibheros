@@ -20,7 +20,7 @@
 
 		<div v-if="success" class="text-green-500">La tâche a bien été créée !</div>
 
-		<button @click="signup">Créer une nouvelle tâche</button>
+		<button @click="addTask">Créer une nouvelle tâche</button>
 	</Dialog>
 </template>
 
@@ -47,7 +47,7 @@ function initialData() {
 export default {
 	data: () => initialData(),
 	methods: {
-		async signup() {
+		async addTask() {
 			if (this.title.trim() === '' || this.description.trim() === '' ||
 				this.duedate.trim() === '') {
 					this.missing = true;
@@ -56,26 +56,13 @@ export default {
 
 			this.missing = false;
 
-			fetch('http://localhost:3000/tasklists/' + this.app.currentBoard.id + '/tasks', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				},
-				body: JSON.stringify({
-					title: this.title,
-					description: this.description,
-					creationdate: new Date(),
-					duedate: this.duedate
-				})
-			}).then(res => {
+			this.app.addTask(this.title, this.description, this.duedate).then(res => {
 				if (res.status === 201) {
 					this.success = true;
 					this.$emit('taskCreated');
+					Object.assign(this.$data, initialData());
 				}
-			})
-
-			Object.assign(this.$data, initialData());
+			});
 		}
 	}
 }

@@ -4,20 +4,28 @@
 			<text>Tâche crée le {{ app.currentTask.creationdate.substring(0, 10) }}</text>
 			<div class="flex flex-col">
 				<text>Titre</text>
-				<textarea v-model="app.currentTask.title" :class="{ 'border-red-500': missing && app.currentTask.title === '' }"></textarea>
-				<text class="text-sm text-red-500" v-if="missing && app.currentTask.title === ''">Titre manquant</text>
+				<textarea v-model="title" :class="{ 'border-red-500': title === '' }"></textarea>
+				<text class="text-sm text-red-500" v-if="title === ''">Titre manquant</text>
 			</div>
 
 			<div class="flex flex-col">
 				<text>Description</text>
-				<textarea v-model="app.currentTask.description" :class="{ 'border-red-500': missing && app.currentTask.description === '' }"></textarea>
-				<text class="text-sm text-red-500" v-if="missing && app.currentTask.description === ''">Description manquante</text>
+				<textarea v-model="description" :class="{ 'border-red-500': description === '' }"></textarea>
+				<text class="text-sm text-red-500" v-if="description === ''">Description manquante</text>
 			</div>
 
 			<div class="flex flex-col">
 				<text>Date d'échéance</text>
-				<input type="date" v-model="app.currentTask.duedate" :class="{ 'border-red-500': missing && app.currentTask.duedate === '' }" />
-				<text class="text-sm text-red-500" v-if="missing && app.currentTask.duedate === ''">Date d'échéance manquante</text>
+				<input type="date" v-model="duedate" :class="{ 'border-red-500': duedate === '' }" />
+				<text class="text-sm text-red-500" v-if="duedate === ''">Date d'échéance manquante</text>
+			</div>
+
+			<div class="flex flex-col">
+				<text>État</text>
+				<select v-model="state">
+					<option value="current">En cours</option>
+					<option value="finished">Terminé</option>
+				</select>
 			</div>
 
 			<button @click="updateTask">Enregistrer</button>
@@ -33,32 +41,25 @@ import useApp from '@/stores/app';
 
 export default {
 	data: () => ({
+		title: '',
+		description: '',
+		duedate: '',
+		state: null,
 		session: useSession(),
 		app: useApp()
 	}),
+	created() {
+		this.title = this.app.currentTask.title;
+		this.description = this.app.currentTask.description;
+		this.duedate = this.app.currentTask.duedate;
+		this.state = this.app.currentTask.state;
+	},
 	methods: {
 		updateTask() {
-			fetch('http://localhost:3000/tasklists/' + this.app.currentBoard.id + '/tasks/' + this.app.currentTask.id, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				},
-				body: JSON.stringify({
-					title: this.app.currentBoard.title,
-					description: this.app.currentBoard.description,
-					duedate: this.app.currentBoard.duedate
-				})
-			});
+			this.app.updateTask(this.title, this.description, this.duedate, this.state);
 		},
 		deleteTask() {
-			fetch('http://localhost:3000/tasklists/' + this.app.currentBoard.id + '/tasks/' + this.app.currentTask.id, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				}
-			});
+			this.app.deleteTask();
 		}
 	}
 };
