@@ -13,14 +13,25 @@
 
 		<div v-if="!editMode">
 			<EditButton @click="editMode = true" />
-			<DeleteButton @click="deleteBoard(board)" />
+			<DeleteButton @click="showDeleteDialog = true" />
 		</div>
+
+		<Dialog v-if="showDeleteDialog" @close="showDeleteDialog = false">
+			<text>Êtes-vous sûr de vouloir supprimer cette liste de tâches ?</text>
+
+			<div class="flex flex-row mx-auto gap-4">
+				<button @click="showDeleteDialog = false">Non</button>
+				<button class="bg-red-500" @click="deleteBoard(board)">Oui</button>
+			</div>
+			<br>
+		</Dialog>
 	</div>
 </template>
 
 <script setup>
 import EditButton from './EditButton.vue';
 import DeleteButton from './DeleteButton.vue';
+import Dialog from './Dialog.vue';
 </script>
 
 <script>
@@ -33,7 +44,9 @@ export default {
 		session: useSession(),
 		app: useApp(),
 		editMode: false,
-		newName: ''
+		newName: '',
+
+		showDeleteDialog: false
 	}),
 	created() {
 		this.newName = this.board.name;

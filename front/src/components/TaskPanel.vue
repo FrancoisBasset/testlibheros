@@ -30,10 +30,24 @@
 
 			<button @click="updateTask">Enregistrer</button>
 
-			<button @click="deleteTask" class="bg-red-500">Supprimer</button>
+			<button @click="showDeleteDialog = true" class="bg-red-500">Supprimer</button>
 		</div>
+
+		<Dialog v-if="showDeleteDialog" @close="showDeleteDialog = false">
+			<text>Êtes-vous sûr de vouloir supprimer cette tâche ?</text>
+
+			<div class="flex flex-row mx-auto gap-4">
+				<button @click="showDeleteDialog = false">Non</button>
+				<button class="bg-red-500" @click="deleteTask">Oui</button>
+			</div>
+			<br>
+		</Dialog>
 	</div>
 </template>
+
+<script setup>
+import Dialog from './Dialog.vue';
+</script>
 
 <script>
 import useSession from '@/stores/session';
@@ -46,7 +60,9 @@ export default {
 		dueDate: '',
 		state: null,
 		session: useSession(),
-		app: useApp()
+		app: useApp(),
+
+		showDeleteDialog: false
 	}),
 	created() {
 		this.title = this.app.currentTask.title;
