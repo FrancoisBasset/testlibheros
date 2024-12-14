@@ -17,7 +17,7 @@ export default class User extends Model<User> {
 	lastName: string;
 
 	@Column
-	mailaddress: string;
+	mailAddress: string;
 
 	@HasMany(() => TaskList)
 	tasklists: TaskList[];

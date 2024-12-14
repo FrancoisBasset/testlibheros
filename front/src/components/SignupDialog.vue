@@ -20,8 +20,8 @@
 
 		<div class="flex flex-col">
 			<text>Adresse mail</text>
-			<input type="text" v-model="mailaddress" :class="{ 'border-red-500': missing && mailaddress === '' }" />
-			<text class="text-sm text-red-500" v-if="missing && mailaddress === ''">Adresse mail manquante</text>
+			<input type="text" v-model="mailAddress" :class="{ 'border-red-500': missing && mailAddress === '' }" />
+			<text class="text-sm text-red-500" v-if="missing && mailAddress === ''">Adresse mail manquante</text>
 		</div>
 
 		<div class="flex flex-col">
@@ -55,7 +55,7 @@ function initialData() {
 		username: '',
 		firstName: '',
 		lastName: '',
-		mailaddress: '',
+		mailAddress: '',
 		password1: '',
 		password2: '',
 		missing: false,
@@ -70,7 +70,7 @@ export default {
 		
 		async signup() {
 			if (this.username.trim() === '' || this.firstName.trim() === '' ||
-				this.lastName.trim() === '' || this.mailaddress.trim() === '' || this.password1.trim() === '') {
+				this.lastName.trim() === '' || this.mailAddress.trim() === '' || this.password1.trim() === '') {
 					this.missing = true;
 					return;
 				}
@@ -91,7 +91,7 @@ export default {
 					username: this.username,
 					firstName: this.firstName,
 					lastName: this.lastName,
-					mailaddress: this.mailaddress,
+					mailAddress: this.mailAddress,
 					password: await hashPassword(this.password1)
 				})
 			}).then(res => {
