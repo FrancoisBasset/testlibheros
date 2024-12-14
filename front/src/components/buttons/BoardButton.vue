@@ -29,9 +29,9 @@
 </template>
 
 <script setup>
-import EditButton from './EditButton.vue';
-import DeleteButton from './DeleteButton.vue';
-import Dialog from './Dialog.vue';
+import EditButton from '@/components/buttons/EditButton.vue';
+import DeleteButton from '@/components/buttons/DeleteButton.vue';
+import Dialog from '@/components/dialogs/Dialog.vue';
 </script>
 
 <script>

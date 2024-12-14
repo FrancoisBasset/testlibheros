@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import SigninDialog from './SigninDialog.vue';
-import SignupDialog from './SignupDialog.vue';
+import SigninDialog from '@/components/dialogs/SigninDialog.vue';
+import SignupDialog from '@/components/dialogs/SignupDialog.vue';
 </script>
 
 <script>

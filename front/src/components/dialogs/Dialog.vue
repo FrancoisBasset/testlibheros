@@ -8,5 +8,5 @@
 </template>
 
 <script setup>
-import CloseButton from './CloseButton.vue';
+import CloseButton from '@/components/buttons/CloseButton.vue';
 </script>

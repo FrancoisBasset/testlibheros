@@ -44,11 +44,11 @@
 </template>
 
 <script setup>
-import Dialog from './Dialog.vue';
+import Dialog from '@/components/dialogs/Dialog.vue';
 </script>
 
 <script>
-import { hashPassword } from '../utils/security';
+import { hashPassword } from '@/utils/security';
 
 function initialData() {
 	return {

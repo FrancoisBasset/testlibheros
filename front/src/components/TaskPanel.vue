@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import Dialog from './Dialog.vue';
+import Dialog from '@/components/dialogs/Dialog.vue';
 </script>
 
 <script>

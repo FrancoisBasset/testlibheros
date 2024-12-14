@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import CloseButton from '@/components/CloseButton.vue';
-import LogoutButton from '@/components/LogoutButton.vue';
+import CloseButton from '@/components/buttons/CloseButton.vue';
+import LogoutButton from '@/components/buttons/LogoutButton.vue';
 import PanelBoardForm from '@/components/PanelBoardForm.vue';
 </script>

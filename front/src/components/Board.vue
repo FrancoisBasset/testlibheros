@@ -20,8 +20,8 @@
 </template>
 
 <script setup>
-import CreateTaskDialog from './CreateTaskDialog.vue';
-import Task from './Task.vue';
+import CreateTaskDialog from '@/components/dialogs/CreateTaskDialog.vue';
+import Task from '@/components/Task.vue';
 </script>
 
 <script>

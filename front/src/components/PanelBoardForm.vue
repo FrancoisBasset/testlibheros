@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import BoardButton from './BoardButton.vue';
+import BoardButton from '@/components/buttons/BoardButton.vue';
 </script>
 
 <script>
