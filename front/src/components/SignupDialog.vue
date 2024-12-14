@@ -8,8 +8,8 @@
 
 		<div class="flex flex-col">
 			<text>Prénom</text>
-			<input type="text" v-model="firstname" :class="{ 'border-red-500': missing && firstname === '' }" />
-			<text class="text-sm text-red-500" v-if="missing && firstname === ''">Prénom manquant</text>
+			<input type="text" v-model="firstName" :class="{ 'border-red-500': missing && firstName === '' }" />
+			<text class="text-sm text-red-500" v-if="missing && firstName === ''">Prénom manquant</text>
 		</div>
 
 		<div class="flex flex-col">
@@ -53,7 +53,7 @@ import { hashPassword } from '../utils/security';
 function initialData() {
 	return {
 		username: '',
-		firstname: '',
+		firstName: '',
 		lastname: '',
 		mailaddress: '',
 		password1: '',
@@ -69,7 +69,7 @@ export default {
 	methods: {
 		
 		async signup() {
-			if (this.username.trim() === '' || this.firstname.trim() === '' ||
+			if (this.username.trim() === '' || this.firstName.trim() === '' ||
 				this.lastname.trim() === '' || this.mailaddress.trim() === '' || this.password1.trim() === '') {
 					this.missing = true;
 					return;
@@ -89,7 +89,7 @@ export default {
 				},
 				body: JSON.stringify({
 					username: this.username,
-					firstname: this.firstname,
+					firstName: this.firstName,
 					lastname: this.lastname,
 					mailaddress: this.mailaddress,
 					password: await hashPassword(this.password1)
