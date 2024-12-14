@@ -3,25 +3,24 @@
 		<div class="flex flex-col gap-5">
 			<text>Tâche crée le {{ app.currentTask.creationDate.substring(0, 10) }}</text>
 			<div class="flex flex-col">
-				<text>Titre</text>
+				<text>Titre *</text>
 				<textarea v-model="title" :class="{ 'border-red-500': title === '' }"></textarea>
 				<text class="text-sm text-red-500" v-if="title === ''">Titre manquant</text>
 			</div>
 
 			<div class="flex flex-col">
 				<text>Description</text>
-				<textarea v-model="description" :class="{ 'border-red-500': description === '' }"></textarea>
-				<text class="text-sm text-red-500" v-if="description === ''">Description manquante</text>
+				<textarea v-model="description"></textarea>
 			</div>
 
 			<div class="flex flex-col">
-				<text>Date d'échéance</text>
+				<text>Date d'échéance *</text>
 				<input type="date" v-model="dueDate" :class="{ 'border-red-500': dueDate === '' }" />
 				<text class="text-sm text-red-500" v-if="dueDate === ''">Date d'échéance manquante</text>
 			</div>
 
 			<div class="flex flex-col">
-				<text>État</text>
+				<text>État *</text>
 				<select v-model="state">
 					<option value="current">En cours</option>
 					<option value="finished">Terminé</option>
