@@ -14,8 +14,8 @@
 
 		<div class="flex flex-col">
 			<text>Nom</text>
-			<input type="text" v-model="lastname" :class="{ 'border-red-500': missing && lastname === '' }" />
-			<text class="text-sm text-red-500" v-if="missing && lastname === ''">Nom manquant</text>
+			<input type="text" v-model="lastName" :class="{ 'border-red-500': missing && lastName === '' }" />
+			<text class="text-sm text-red-500" v-if="missing && lastName === ''">Nom manquant</text>
 		</div>
 
 		<div class="flex flex-col">
@@ -54,7 +54,7 @@ function initialData() {
 	return {
 		username: '',
 		firstName: '',
-		lastname: '',
+		lastName: '',
 		mailaddress: '',
 		password1: '',
 		password2: '',
@@ -70,7 +70,7 @@ export default {
 		
 		async signup() {
 			if (this.username.trim() === '' || this.firstName.trim() === '' ||
-				this.lastname.trim() === '' || this.mailaddress.trim() === '' || this.password1.trim() === '') {
+				this.lastName.trim() === '' || this.mailaddress.trim() === '' || this.password1.trim() === '') {
 					this.missing = true;
 					return;
 				}
@@ -90,7 +90,7 @@ export default {
 				body: JSON.stringify({
 					username: this.username,
 					firstName: this.firstName,
-					lastname: this.lastname,
+					lastName: this.lastName,
 					mailaddress: this.mailaddress,
 					password: await hashPassword(this.password1)
 				})

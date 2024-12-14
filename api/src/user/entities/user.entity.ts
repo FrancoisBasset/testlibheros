@@ -14,7 +14,7 @@ export default class User extends Model<User> {
 	firstName: string;
 
 	@Column
-	lastname: string;
+	lastName: string;
 
 	@Column
 	mailaddress: string;
