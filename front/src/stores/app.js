@@ -79,7 +79,7 @@ export default defineStore('app', {
 				body: JSON.stringify({
 					title: title,
 					description: description,
-					creationdate: new Date(),
+					creationDate: new Date(),
 					duedate: duedate
 				})
 			})

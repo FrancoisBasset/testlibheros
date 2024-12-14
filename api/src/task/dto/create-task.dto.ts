@@ -1,6 +1,6 @@
 export default class CreateTaskDto {
 	title: string;
 	description: string;
-	creationdate: string;
+	creationDate: string;
 	duedate: string;
 }

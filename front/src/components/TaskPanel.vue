@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col justify-between h-screen p-2 w-8/12 mx-auto">
 		<div class="flex flex-col gap-5">
-			<text>Tâche crée le {{ app.currentTask.creationdate.substring(0, 10) }}</text>
+			<text>Tâche crée le {{ app.currentTask.creationDate.substring(0, 10) }}</text>
 			<div class="flex flex-col">
 				<text>Titre</text>
 				<textarea v-model="title" :class="{ 'border-red-500': title === '' }"></textarea>

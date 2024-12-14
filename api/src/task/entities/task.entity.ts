@@ -17,7 +17,7 @@ export default class Task extends Model<Task> {
 	description: string;
 
 	@Column
-	creationdate: string;
+	creationDate: string;
 
 	@Column
 	duedate: string;
