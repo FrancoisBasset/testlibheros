@@ -1,5 +1,5 @@
 <template>
-	<button class="flex flex-row gap-4 h-16 items-center justify-center bg-red-500 w-full rounded-none" @click="logout">
+	<button class="flex flex-row gap-4 h-16 items-center justify-center bg-red-500 w-full rounded-none" @click="session.logout">
 		Déconnexion
 		<svg class="h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 			<title>Se déconnecter</title>
@@ -14,12 +14,6 @@ import useSession from '@/stores/session';
 export default {
 	data: () => ({
 		session: useSession()
-	}),
-	methods: {
-		logout() {
-			this.session.user = null;
-			localStorage.removeItem('user');
-		}
-	}
+	})
 };
 </script>

@@ -22,7 +22,8 @@ export default class AuthService {
 
 		return {
 			access_token: await this.jwtService.signAsync(payload, {
-				secret: 'secret'
+				secret: 'secret',
+				expiresIn: '10m'
 			})
 		};
 	}

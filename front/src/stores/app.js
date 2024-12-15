@@ -12,12 +12,21 @@ export default defineStore('app', {
 		session: useSession()
 	}),
 	actions: {
+		logoutIf401(res) {
+			if (res.status === 401) {
+				this.session.logout();
+				return Promise.reject();
+			}
+
+			return res;
+		},
 		reloadBoards() {
 			fetch('http://localhost:3000/tasklists', {
 				headers: {
 					'Authorization': 'Bearer ' + this.session.user.access_token
 				}
 			})
+				.then(res => this.logoutIf401(res))
 				.then(res => res.json())
 				.then(json => this.boards = json);
 		},
@@ -27,6 +36,7 @@ export default defineStore('app', {
 					'Authorization': 'Bearer ' + this.session.user.access_token
 				}
 			})
+				.then(res => this.logoutIf401(res))
 				.then(res => res.json())
 				.then(json => this.tasks = json);
 		},
@@ -40,9 +50,9 @@ export default defineStore('app', {
 				body: JSON.stringify({
 					name: name
 				})
-			}).then(() => {
-				this.reloadBoards();
-			});
+			})
+				.then(res => this.logoutIf401(res))
+				.then(() => this.reloadBoards());
 		},
 		renameBoard(id, name) {
 			return fetch('http://localhost:3000/tasklists/' + id, {
@@ -55,6 +65,7 @@ export default defineStore('app', {
 					name: name
 				})
 			})
+				.then(res => this.logoutIf401(res))
 		},
 		deleteBoard(id) {
 			return fetch('http://localhost:3000/tasklists/' + id, {
@@ -63,11 +74,13 @@ export default defineStore('app', {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + this.session.user.access_token
 				}
-			}).then(() => {
-				if (this.currentBoard && id === this.currentBoard.id) {
-					this.currentBoard = null;
-				}
-			});
+			})
+				.then(res => this.logoutIf401(res))
+				.then(() => {
+					if (this.currentBoard && id === this.currentBoard.id) {
+						this.currentBoard = null;
+					}
+				});
 		},
 		addTask(title, description, dueDate) {
 			return fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks', {
@@ -83,6 +96,7 @@ export default defineStore('app', {
 					dueDate: dueDate
 				})
 			})
+				.then(res => this.logoutIf401(res));
 		},
 		updateTask(title, description, dueDate, state) {
 			return fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks/' + this.currentTask.id, {
@@ -97,9 +111,11 @@ export default defineStore('app', {
 					dueDate: dueDate,
 					state: state
 				})
-			}).then(() => {
-				this.reloadTasks();
 			})
+				.then(res => this.logoutIf401(res))
+				.then(() => {
+					this.reloadTasks();
+				});
 		},
 		deleteTask() {
 			return fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks/' + this.currentTask.id, {
@@ -108,10 +124,12 @@ export default defineStore('app', {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + this.session.user.access_token
 				}
-			}).then(() => {
-				this.reloadTasks();
-				this.currentTask = null;
 			})
+				.then(res => this.logoutIf401(res))
+				.then(() => {
+					this.reloadTasks();
+					this.currentTask = null;
+				});
 		}
 	}
 });
