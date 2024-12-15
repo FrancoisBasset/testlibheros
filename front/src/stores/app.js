@@ -12,6 +12,12 @@ export default defineStore('app', {
 		session: useSession()
 	}),
 	actions: {
+		getHeaders() {
+			return {
+				'Authorization': 'Bearer ' + this.session.user.access_token,
+				'Content-Type': 'application/json'
+			};
+		},
 		logoutIf401(res) {
 			if (res.status === 401) {
 				this.session.logout();
@@ -22,9 +28,7 @@ export default defineStore('app', {
 		},
 		reloadBoards() {
 			fetch('http://localhost:3000/tasklists', {
-				headers: {
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				}
+				headers: this.getHeaders()
 			})
 				.then(res => this.logoutIf401(res))
 				.then(res => res.json())
@@ -32,9 +36,7 @@ export default defineStore('app', {
 		},
 		reloadTasks() {
 			fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks', {
-				headers: {
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				}
+				headers: this.getHeaders()
 			})
 				.then(res => this.logoutIf401(res))
 				.then(res => res.json())
@@ -43,10 +45,7 @@ export default defineStore('app', {
 		addBoard(name) {
 			return fetch('http://localhost:3000/tasklists', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				},
+				headers: this.getHeaders(),
 				body: JSON.stringify({
 					name: name
 				})
@@ -57,10 +56,7 @@ export default defineStore('app', {
 		renameBoard(id, name) {
 			return fetch('http://localhost:3000/tasklists/' + id, {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				},
+				headers: this.getHeaders(),
 				body: JSON.stringify({
 					name: name
 				})
@@ -70,10 +66,7 @@ export default defineStore('app', {
 		deleteBoard(id) {
 			return fetch('http://localhost:3000/tasklists/' + id, {
 				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				}
+				headers: this.getHeaders()
 			})
 				.then(res => this.logoutIf401(res))
 				.then(() => {
@@ -85,10 +78,7 @@ export default defineStore('app', {
 		addTask(title, description, dueDate) {
 			return fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				},
+				headers: this.getHeaders(),
 				body: JSON.stringify({
 					title: title,
 					description: description,
@@ -101,10 +91,7 @@ export default defineStore('app', {
 		updateTask(title, description, dueDate, state) {
 			return fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks/' + this.currentTask.id, {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				},
+				headers: this.getHeaders(),
 				body: JSON.stringify({
 					title: title,
 					description: description,
@@ -120,10 +107,7 @@ export default defineStore('app', {
 		deleteTask() {
 			return fetch('http://localhost:3000/tasklists/' + this.currentBoard.id + '/tasks/' + this.currentTask.id, {
 				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.session.user.access_token
-				}
+				headers: this.getHeaders()
 			})
 				.then(res => this.logoutIf401(res))
 				.then(() => {
