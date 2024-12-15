@@ -6,7 +6,6 @@ import {
 	Param,
 	Delete,
 	UseGuards,
-	Req,
 	Put
 } from '@nestjs/common';
 import TaskService from './task.service';

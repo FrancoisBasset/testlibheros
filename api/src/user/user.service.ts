@@ -8,7 +8,7 @@ import UpdateUserDto from './dto/update-user.dto';
 export default class UserService {
 	constructor(
 		@InjectModel(User)
-		private userModel: typeof User
+		private readonly userModel: typeof User
 	) {}
 
 	create(createUserDto: CreateUserDto) {

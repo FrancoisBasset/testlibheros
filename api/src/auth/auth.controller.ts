@@ -3,7 +3,7 @@ import AuthService from './auth.service';
 
 @Controller('auth')
 export default class AuthController {
-	constructor(private authService: AuthService) {}
+	constructor(private readonly authService: AuthService) {}
 
 	@HttpCode(HttpStatus.OK)
 	@Post()

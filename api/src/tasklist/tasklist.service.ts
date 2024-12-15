@@ -9,7 +9,7 @@ import Task from 'src/task/entities/task.entity';
 export default class TasklistService {
 	constructor(
 		@InjectModel(TaskList)
-		private tasklistModel: typeof TaskList
+		private readonly tasklistModel: typeof TaskList
 	) {}
 
 	create(createTasklistDto: CreateTasklistDto, userId: number) {
